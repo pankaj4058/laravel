@@ -77,16 +77,20 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,$id)
     {
         //die('update controller');
         $validate = $this->validate($request,[
             'name'=> 'required|max:255|min:3|string'
         ]);
-            echo "<pre>";
-            print_r($validate);
-            die;
-        $category->update($validate);
+
+                $category = Category::find($id);
+                $category->name = $request->name;
+
+            // echo "<pre>";
+            // print_r($validate);
+            // die;
+        $category->save();
         return redirect('categories')->with('message','Category Updated Succesfully');
     }
 

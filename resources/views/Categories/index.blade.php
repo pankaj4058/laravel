@@ -19,7 +19,7 @@
 
                     <div class="modal-body">
                       <div class="form-group">
-                        <input type="text" name="name" class="form-control" value="" placeholder="Category Name" required>
+                        <input type="text" name="name" class="form-control updatecat" value="" placeholder="Category Name" required>
                       </div>
                     </div>
 
@@ -127,11 +127,15 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script> --}}
 
-        <script type="text/javascript">
-          $('.edit-category').on('click', function() {
+        <script>
+            $(document).on("click",".edit-category",function(){
+            debugger
             var id = $(this).data('id');
             var name = $(this).data('name');
-            var url = "{{ url('category') }}/" + id;
+            var url = "{{ url('category.update') }}/" + id;
+
+
+            // $('.updatecat').setAttribute('id',id);
 
             $('#editCategoryModal form').attr('action', url);
             $('#editCategoryModal form input[name="name"]').val(name);
