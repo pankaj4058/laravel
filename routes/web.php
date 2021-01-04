@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\CategoryController;
 
 
 /*
@@ -27,6 +28,8 @@ Route::get('/', [PostController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [PostController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/category.store', [CategoryController::class, 'store']);
 
 // check for logged in user
 Route::get('/fileupload', [FileUploadController::class, 'index']);
@@ -45,6 +48,7 @@ Route::get('/edit/{slug}', [PostController::class, 'edit']);
 Route::post('/update', [PostController::class, 'update']);
 Route::get('/delete/{id}', [PostController::class, 'destroy']);
 Route::get('/delete/{id}/{author_id}', [PostController::class, 'imgdelete']);
+
 
 
 

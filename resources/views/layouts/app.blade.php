@@ -87,6 +87,9 @@
                                     <li>
                                         <a href="{{url('fileupload')}}">File Upload</a>
                                     </li>
+                                    <li>
+                                        <a href="{{url('categories')}}">Category</a>
+                                    </li>
                                 </ul>
 
                                 {{-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -137,6 +140,9 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div>
+                @yield('category')
             </div>
             <div class="row">
               <div class="col-md-10 col-md-offset-1">
