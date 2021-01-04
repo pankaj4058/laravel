@@ -23,7 +23,7 @@
     </div>
     <div class="form-group">
         <label for="exampleFormControlFile1">Upload Feature Image</label>
-        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image" required>
+        <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image">
     </div>
     <div class="form-group">
         <label for="category_id">Category</label>

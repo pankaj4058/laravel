@@ -109,17 +109,22 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6048',
+            //  'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6048',
             'category_id' => 'required|numeric',
         ]);
-            $image = $request->file('image');
-            $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $input['imagename']);
+
+
             $post_id = $request->input('post_id');
             $post = posts::find($post_id);
             if ($post && ($post->author_id == $request->user()->id || $request->user()->is_admin())) {
                // die('if update');
+               if ($request->file('image')) {
+                $image = $request->file('image');
+                $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+                $destinationPath = public_path('/images');
+                $image->move($destinationPath, $input['imagename']);
+                $post->image = '/public/images'.'/'.$input['imagename'];
+            }
                 $title = $request->input('title');
                 $slug = Str::slug($title);
                 $duplicate = posts::where('slug',$slug)->first();
@@ -134,7 +139,7 @@ class PostController extends Controller
                 }
                 $post->title = $title;
                 $post->body = $request->input('body');
-                $post->image = '/public/images'.'/'.$input['imagename'];
+
                 $post->category_id = $request->category_id;
                 if ($request->has('save')) {
                     $post->active = 0;

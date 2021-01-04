@@ -31,6 +31,7 @@ Route::get('/home', [PostController::class, 'index']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/category.store', [CategoryController::class, 'store']);
 Route::post('/category.update', [CategoryController::class, 'update']);
+Route::post('/category.destroy/{id}', [CategoryController::class, 'destroy']);
 
 // check for logged in user
 Route::get('/fileupload', [FileUploadController::class, 'index']);

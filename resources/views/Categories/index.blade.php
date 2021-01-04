@@ -51,7 +51,7 @@
 
                             <form action="{{ url('category.destroy', $category->id) }}" method="POST">
                               @csrf
-                              @method('DELETE')
+                              {{-- @method('DELETE') --}}
 
                               <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                             </form>
@@ -70,7 +70,7 @@
 
                                     <form action="{{ url('category.destroy', $child->id) }}" method="POST">
                                       @csrf
-                                      @method('DELETE')
+                                      {{-- @method('DELETE') --}}
 
                                       <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                     </form>
