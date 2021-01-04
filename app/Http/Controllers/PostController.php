@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use App\Models\posts;
 use App\Models\comments;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CategoryController;
 use App\Http\Requests\PostFormRequest;
 use File;
 
@@ -16,6 +18,8 @@ class PostController extends Controller
     public function index(){
         //die('POstController');
         $data['posts'] = posts::where('active',1)->orderBy('created_at','desc')->paginate(5);
+        // $post = posts::where('active',1)->orderBy('created_at','desc');
+        // $data['category'] = Category::where('id',$post->category_id);
 
         $data['title'] = 'Latest Posts';
         //return home.blade.php template from resources/views folder
@@ -23,18 +27,24 @@ class PostController extends Controller
     }
 
     public function create(Request $request){
+
+        $categories = Category::with('children')->whereNull('parent_id')->get();
+
         if ($request->user()->can_post()) {
-            return view('posts.create');
+            return view('posts.create')->with(['categories' => $categories]);
         }else{
             return redirect('/')->withErrors('You have not sufficient permissions for writing post');
         }
     }
 
     public function store(PostFormRequest $request){
+        // print_r($request->category_id);
+        // die;
         $request->validate([
             'title' => 'required',
             'body' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6048',
+            'category_id' => 'required|numeric',
         ]);
         $image = $request->file('image');
         $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
@@ -43,6 +53,8 @@ class PostController extends Controller
         $post = new posts();
         $post->title = $request->get('title');
         $post->body = $request->get('body');
+        $post->category_id = $request->category_id;
+
         $post->slug = Str::slug($post->title);
         $post->image = '/public/images'.'/'.$input['imagename'];
 
@@ -59,6 +71,12 @@ class PostController extends Controller
             $post->active = 1;
             $message = 'POst Publish succesfully';
         }
+        // }echo"<pre>";
+        // print_r($category);
+        // die;
+        // echo"<pre>";
+        // print_r($post);
+        // die;
         $post->save();
         return redirect('/home')->with('message',$message);
         // return redirect('edit/',$post->slug)->withMessage($message);
@@ -68,6 +86,7 @@ class PostController extends Controller
     public function show($slug){
 
         $data['post'] = posts::where('slug',$slug)->first();
+
         if (!$data) {
             return redirect('/')->withErrors('Requested page not found');
         }
@@ -76,9 +95,10 @@ class PostController extends Controller
     }
     public function edit(Request $request,$slug)
     {
-        $post = posts::where('slug',$slug)->first();
-        if ($post && ($request->user()->id == $post->author_id || $request->user()->is_admin())) {
-           return view('posts.edit')->with('post',$post);
+        $data['categories'] = Category::with('children')->whereNull('parent_id')->get();
+        $data['post'] = posts::where('slug',$slug)->first();
+        if ($data['post'] && ($request->user()->id == $data['post']->author_id || $request->user()->is_admin())) {
+           return view('posts.edit',$data);
         }
         return redirect('/')->withErrors('you have not sucficient permission');
     }
@@ -89,7 +109,8 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'body' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6048',
+             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:6048',
+            'category_id' => 'required|numeric',
         ]);
             $image = $request->file('image');
             $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
@@ -114,6 +135,7 @@ class PostController extends Controller
                 $post->title = $title;
                 $post->body = $request->input('body');
                 $post->image = '/public/images'.'/'.$input['imagename'];
+                $post->category_id = $request->category_id;
                 if ($request->has('save')) {
                     $post->active = 0;
                     $message = 'Post save succesfully';

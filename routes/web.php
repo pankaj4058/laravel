@@ -30,6 +30,7 @@ Auth::routes();
 Route::get('/home', [PostController::class, 'index']);
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/category.store', [CategoryController::class, 'store']);
+Route::post('/category.update', [CategoryController::class, 'update']);
 
 // check for logged in user
 Route::get('/fileupload', [FileUploadController::class, 'index']);

@@ -13,9 +13,9 @@
                     </button>
                   </div>
 
-                  <form action="" method="POST">
+                  <form action="{{url('category.update')}}" method="POST">
                     @csrf
-                    @method('PUT')
+                    {{-- @method('PUT') --}}
 
                     <div class="modal-body">
                       <div class="form-group">

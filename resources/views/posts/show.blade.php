@@ -20,6 +20,7 @@
     <div>
         <img src="{{url($post->image)}}" class="img-fluid" alt="Responsive image">
     </div>
+    <p class="text-muted">Category:-{{ $post->category ? $post->category->name : 'Uncategorized' }}</p>
 @endif
 @if ($post)
 

@@ -12,6 +12,7 @@ There is no post till now. Login and write a new post now!!!
   <div class="list-group">
     <div class="list-group-item">
       <h3><a href="{{ url('/'.$post->slug) }}">{{ $post->title }}</a>
+        <p class="text-muted">Category:-{{ $post->category ? $post->category->name : 'Uncategorized' }}</p>
         @if($post->image)
                                     <img class="card-img-top" src="{{ url($post->image) }}" alt="Blog Post Image">
                                 @endif
@@ -34,6 +35,7 @@ There is no post till now. Login and write a new post now!!!
         {!! Str::limit($post->body, $limit = 500, $end = '....... <a href='.url("/".$post->slug).'>Read More</a>') !!}
       </article>
     </div>
+
   </div>
 
   @endforeach

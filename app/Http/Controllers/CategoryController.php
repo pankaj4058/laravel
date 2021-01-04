@@ -79,7 +79,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        //die('update controller');
+        $validate = $this->validate($request,[
+            'name'=> 'required|max:255|min:3|string'
+        ]);
+            echo "<pre>";
+            print_r($validate);
+            die;
+        $category->update($validate);
+        return redirect('categories')->with('message','Category Updated Succesfully');
     }
 
     /**

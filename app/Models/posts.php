@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\comments;
 use App\Models\User;
+use App\Models\Category;
 
 class posts extends Model
 {
@@ -23,5 +24,10 @@ class posts extends Model
     // returns the instance of the user who is author of that post
     public function author(){
         return $this->belongsTo('App\Models\User','author_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
     }
 }

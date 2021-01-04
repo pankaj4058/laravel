@@ -15,4 +15,9 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Category','parent_id');
     }
+
+    public function post()
+    {
+        return $this->hasMany('App\Models\posts');
+    }
 }
