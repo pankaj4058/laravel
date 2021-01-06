@@ -56,4 +56,16 @@ class UserController extends Controller
         $data['latest_comments'] = $data['user']->comments->take(5);
         return view('admin.profile',$data);
     }
+
+    public function profileImage(Request $request,$id)
+    {
+        $user = User::find($id);
+        $profileImg = $request->file('avatar');
+        $input['imagename'] = time().'.'.$profileImg->getClientOriginalExtension();
+        $destinationPath = public_path('/profileImg');
+        $profileImg->move($destinationPath,$input['imagename']);
+        $user->profile_pic = $input['imagename'];
+        $user->save();
+       return back()->with('message','Profile IMage Uploaded Successfully');
+    }
 }

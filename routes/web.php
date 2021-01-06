@@ -7,6 +7,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MechanicController;
 
 
 /*
@@ -28,6 +29,8 @@ Route::get('/', [PostController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [PostController::class, 'index']);
+Route::get('/mechanic', [MechanicController::class, 'index']);
+
 Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/category.store', [CategoryController::class, 'store']);
 Route::post('/category.update/{id}', [CategoryController::class, 'update']);
@@ -44,6 +47,7 @@ Route::get('/{slug}', [PostController::class, 'show']);
 Route::post('/comment/add', [CommentController::class, 'store']);
 Route::get('/user{id}/posts', [UserController::class, 'user_posts']);
 Route::get('/user/{id}', [UserController::class, 'profile']);
+Route::post('/profile.update/{id}', [UserController::class, 'profileImage']);
 Route::get('/my-drafts/{id}', [UserController::class, 'user_posts_draft']);
 Route::get('/my-all-posts/{id}', [UserController::class, 'user_posts_all']);
 Route::get('/edit/{slug}', [PostController::class, 'edit']);

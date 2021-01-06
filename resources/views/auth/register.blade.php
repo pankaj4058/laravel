@@ -40,6 +40,34 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="phone_no" class="col-md-4 col-form-label text-md-right">{{ __('Phone_no') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="phone_no" type="phone_no" class="form-control @error('phone_no') is-invalid @enderror" name="phone_no" value="{{ old('phone_no') }}" autocomplete="phone_no">
+
+                                {{-- @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror --}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="Address" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="Address" type="Address" class="form-control @error('Address') is-invalid @enderror" name="Address" value="{{ old('Address') }}" autocomplete="Address">
+
+                                {{-- @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror --}}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
